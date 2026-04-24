@@ -1,0 +1,52 @@
+-- Arcymag --
+
+Monitorowanie żywych ksiąg:
+  nastrój,
+  poziom głodu,
+  poziom skażenia
+  
+  Dane do wypożyczenia:
+    czyBezpiecznyDoWypożyczenia,
+    maksymalnyCzasWypożyczenia
+  
+  Dane przechowywania:
+    czyWymagaIzolacji,
+    obecne położenie
+ 
+  Historia  księgi:
+    historia Ewolucji i Mutacji,
+    historia Złączenia* (przechowuje tylko "rodziców"),
+    historia wypożyczeń
+  
+Przeglądaj zbiór 
+Zarejestruj / Usuń / Edytuj - Księgę 
+
+-- Adepci --
+
+Zgłoś incydent,
+Analizuj klątwę,
+Reaguj na próbę ucieczki - Zamknij wszystkie wrota i odpal magiczne kule
+  
+  -- Adept Opiekun --
+  Zadania:
+    Nakarm księge,
+    Izoluj księge,
+
+  -- Adept Strażnik --
+  Zadania:
+    Powstrzymaj próbę ucieczki,
+    Zdejmij klątwę
+  
+-- System -- 
+
+Naliczanie kar za przetrzymywanie księgi
+
+Analiza relacji ksiąg - wysyła Alert, kiedy księgi mogą się zaatakować
+Śledzenie ewolucji i mutacji etc. - Alert
+Śledzenie łączenia ksiąg - Alert
+
+Poinformuj o:
+  karmieniu ksiąg,
+  zbliżających się terminach zwrotu,
+  zakończeniu się procesu ewolucji / mutacji,
+  utworzeniu nowej księgi

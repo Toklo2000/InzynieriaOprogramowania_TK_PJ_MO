@@ -7,7 +7,8 @@ Monitorowanie żywych ksiąg:
   
   Dane do wypożyczenia:
     czyBezpiecznyDoWypożyczenia,
-    maksymalnyCzasWypożyczenia
+    maksymalnyCzasWypożyczenia,
+    stanWypożyczenia (Wypożyczona / na Stanie)
   
   Dane przechowywania:
     czyWymagaIzolacji,
@@ -19,14 +20,14 @@ Monitorowanie żywych ksiąg:
     historia wypożyczeń
   
 Przeglądaj zbiór 
-Zarejestruj / Usuń / Edytuj - Księgę 
+Zarejestruj / Usuń / Edytuj - księge
 
 -- Adepci --
 
 Zgłoś incydent,
 Analizuj klątwę,
 Reaguj na próbę ucieczki - Zamknij wszystkie wrota i odpal magiczne kule
-  
+ 
   -- Adept Opiekun --
   Zadania:
     Nakarm księge,
@@ -37,6 +38,21 @@ Reaguj na próbę ucieczki - Zamknij wszystkie wrota i odpal magiczne kule
     Powstrzymaj próbę ucieczki,
     Zdejmij klątwę
   
+  -- Adept Bibliotekarz -- 
+  Wydaj zarezerwowaną księge
+  Przyjmij zwrot księgi
+
+
+-- Użytkownik -- 
+Przeglądaj zbiór 
+  
+  -- Użytkownik Zalogowany -- 
+  Rezerwuj księgę
+  Sprawdź obecne wypożyczenia
+  Historia wypożyczeń
+  Zaległe Opłaty
+  Powiadomienia 
+
 -- System -- 
 
 Naliczanie kar za przetrzymywanie księgi

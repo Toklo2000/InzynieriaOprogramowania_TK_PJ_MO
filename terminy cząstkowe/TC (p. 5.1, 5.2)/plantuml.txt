@@ -1,0 +1,233 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam nodesep 70
+skinparam ranksep 140
+
+' ========================
+' KLASY
+' ========================
+
+class Księga {
+  int idKsięgi
+  string nazwa
+  typKsięgi typ 
+  int wiek
+  Lokalizacja położenie
+
+  -- STAN --
+  int nastrój
+  int poziom głodu
+  int poziom skażenia
+  Map<Księga,int> relacje 
+
+  -- WYPOŻYCZANIE --
+  bool czyBezpiecznaDoWypozyczenia
+  bool czyZarezerwowana
+  bool czyWypozyczona
+  int maksymalnyCzasWypozyczenia
+  
+  -- HISTORIA --
+  List<UbiegłaKsięga> rodzice
+  List<Mutacja> mutacje
+  List<Ewolucja> ewolucje
+}
+
+class UbiegłaKsięga {
+  string nazwa
+  List<UbiegłaKsięga> rodzice
+  List<Mutacja> mutacje
+  List<Ewolucja> ewolucje
+}
+
+class Mutacja {
+  String opis
+  Date data
+}
+
+class Ewolucja {
+  String opis 
+  Date data
+}
+
+class Wypozyczenie {
+  Księga księga
+  Date odKiedy
+  Date doKiedy
+  int opłataZaDzieńSpóźnienia
+}
+
+class Powiadomienie {
+  string nazwa 
+  string opis
+  Date data
+  bool czyPrzeczytane
+}
+
+class strefyIzolowane {
+  List<Lokalizacja> izolatki
+}
+
+class zadanie {
+  typZadania typ
+  string nazwa
+  string opis
+  bool czyWykonane
+  Lokalizacja lokalizacja
+  Date godzina
+}
+
+' ========================
+' ENUMY
+' ========================
+
+enum Lokalizacja
+enum typKsięgi
+enum typZadania
+
+' ========================
+' UŻYTKOWNICY
+' ========================
+
+class Użytkownik {
+  int idUzytkownika
+  String login 
+  String hasło 
+  List<Powiadomienie> powiadomienia
+
+  wylogujSie()
+  spradzPowiadomienia()
+  odznaczPowiadomienie()
+}
+
+class UżytkownikZalogowany {
+  List<Wypozyczenie> wypozyczenia
+  List<Księga> rezerwacje
+
+  sprawdzKonto()
+  sprawdzWypozyczenia()
+  szukajKsięge()
+  zarezerwujKsięge()
+}
+
+class Adept {
+  List<zadanie> zadaniaDoWykonania
+
+  sprawdźZadania()
+  odznaczZadanie()
+  izolujStrefe()
+  zakończIzolacje()
+  zgłośIncydent()
+  identyfikujKlątwe()
+}
+
+class Opiekun
+class Strażnik
+
+class Bibliotekarz {
+  zwróćKsięgę()
+  wypożyczKsięgę()
+  sprawdzRezerwacje()
+}
+
+class Arcymag {
+  sprawdzStanKsięgi()
+  edytujKsięge()
+  dodajKsięge()
+  usunKsięgę()
+  dodajZadanie()
+  szukajKsięge()
+  izolujStrefe()
+  zakończIzolacje()
+  zgłośIncydent()
+  identyfikujKlątwe()
+}
+
+class NiezalogowanyUzytkownik {
+  szukajKsiegi()
+  zalogujSie()
+  zarejestrujSie()
+}
+
+' ========================
+' SYSTEM
+' ========================
+
+class System <<repository>> {
+  List<zadanie> dostępneZadania
+  List<Księga> księgiWBibliotece
+
+  zlećZadanie()
+  wyslijPowiadomienie()
+  usunKsięge()
+  edytujKsięge()
+  dodajKsięge()
+  naliczKare()
+  monitorujStanKsiąg()
+}
+
+' ========================
+' RELACJE STRUKTURALNE
+' ========================
+
+Księga "1" --> "1" Lokalizacja : położenie
+Księga "1" --> "1" typKsięgi : typ
+Księga "1" --> "0..*" UbiegłaKsięga : rodzice
+Księga "1" --> "0..*" Mutacja
+Księga "1" --> "0..*" Ewolucja
+Księga "1" --> "0..*" Księga : relacje
+
+UbiegłaKsięga "1" --> "0..*" UbiegłaKsięga
+UbiegłaKsięga "1" --> "0..*" Mutacja
+UbiegłaKsięga "1" --> "0..*" Ewolucja
+
+Wypozyczenie "0..*" --> "1" Księga
+
+Użytkownik "1" --* "0..*" Powiadomienie
+UżytkownikZalogowany "1" --> "0..*" Wypozyczenie
+UżytkownikZalogowany "1" --> "0..*" Księga : zarezerwujKsięge
+
+Adept "1" --> "0..*" zadanie
+zadanie "0..*" --> "1" Lokalizacja
+zadanie "0..*" --> "0..1" typZadania
+
+strefyIzolowane "1" --> "0..*" Lokalizacja
+
+System "1" --> "0..*" Księga : księgiWBibliotece
+System "1" --> "0..*" zadanie
+
+' ========================
+' DZIEDZICZENIE
+' ========================
+
+Użytkownik <|-- UżytkownikZalogowany
+Użytkownik <|-- Adept
+Użytkownik <|-- Arcymag
+
+Adept <|-- Opiekun
+Adept <|-- Strażnik
+Adept <|-- Bibliotekarz
+
+' ========================
+' ZALEŻNOŚCI FUNKCYJNE
+' ========================
+
+System ..> Księga : <<create>> dodajKsięge
+System ..> Księga : <<modify>> edytujKsięge
+System ..> Księga : <<delete>> usunKsięge
+System ..> Księga : monitorujStanKsiąg
+
+System ..> zadanie : dostępneZadania
+System ..> Powiadomienie : wyslijPowiadomienie
+
+Arcymag ..> System : dodajKsięge()
+Arcymag ..> System : edytujKsięge()
+Arcymag ..> System : usunKsięge()
+
+Adept ..> strefyIzolowane : izolujStrefe()
+Adept ..> strefyIzolowane : zakończIzolacje()
+
+Bibliotekarz ..> Wypozyczenie
+Bibliotekarz ..> Księga
+@enduml
